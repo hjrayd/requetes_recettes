@@ -121,5 +121,9 @@ ON recipe_ingredient = ingredient.id_ingredient
 GROUP BY ingredient.id_ingredient
 HAVING COUNT(DISTINCT id_recipe) >= 3;
 
+/*19-Ajouter un nouvel ingrédient à une recette spécifique */
+
+INSERT INTO recipe_ingredient (id_recipe, id_ingredient, quantity)
+VALUES ( 1, 21, 200);
 
 
