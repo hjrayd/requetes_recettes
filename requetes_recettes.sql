@@ -97,3 +97,12 @@ INNER JOIN ingredient
 ON recipe_ingredient.id_ingredient = ingredient.id_ingredient
 WHERE ingredient.price < 2;
 
+/*16-Afficher la/les recettes les plus rapides à préparer.*/
+
+SELECT DISTINCT recipe.recipe_name, recipe.preparation_time
+FROM recipe
+WHERE preparation_time = ( SELECT MIN(preparation_time) FROM recipe);
+
+
+
+
