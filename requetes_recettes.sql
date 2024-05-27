@@ -112,4 +112,14 @@ SELECT id_recipe
 FROM recipe_ingredient
 WHERE recipe_ingredient.id_recipe = recipe.id_recipe);
 
+/*18-Trouver les ingrédients qui sont utilisés dans au moins trois recettes*/
+
+SELECT ingredient.id_ingredient, ingredient.ingredient_name, COUNT( DISTINCT id_recipe) AS number_recipe
+FROM recipe_ingredient
+JOIN ingredient 
+ON recipe_ingredient = ingredient.id_ingredient
+GROUP BY ingredient.id_ingredient
+HAVING COUNT(DISTINCT id_recipe) >= 3;
+
+
 
