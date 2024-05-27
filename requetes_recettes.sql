@@ -103,6 +103,13 @@ SELECT DISTINCT recipe.recipe_name, recipe.preparation_time
 FROM recipe
 WHERE preparation_time = ( SELECT MIN(preparation_time) FROM recipe);
 
+/*17-Trouver les recettes qui ne nécessitent aucun ingrédient (par exemple la recette de la tasse d'eau cha	ude qui consiste à verser de l'eau chaude dans une tasse)*/
 
+SELECT recipe.name_recipe 
+FROM recipe
+WHERE id_recipe NOT IN (
+SELECT id_recipe
+FROM recipe_ingredient
+WHERE recipe_ingredient.id_recipe = recipe.id_recipe);
 
 
