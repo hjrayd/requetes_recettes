@@ -57,18 +57,18 @@ INNER JOIN recipe_ingredient
 ON ingredient.id_ingredient = recipe_ingredient.id_ingredient
 WHERE id_recipe=7;
 
-/*Ajoutez un ingrédients en base de données : poivre, unité : cuillère à café, prix:2,50*/
+/*10-Ajoutez un ingrédients en base de données : poivre, unité : cuillère à café, prix:2,50*/
 
 INSERT INTO ingredient (ingredient_name, unity, price)
 VALUES ('poivre', 'cuillère à café', 2.50);
 
-/*Modifiez le prix de l'ingrédient numéro 12. */
+/*11-Modifiez le prix de l'ingrédient numéro 12. */
 
 UPDATE ingredient
 SET price = 6
 WHERE id_ingredient = 7;
 
-/*Afficher le nombre de recette par catégories*/
+/*12-Afficher le nombre de recette par catégories*/
 
 SELECT category.name, COUNT(id_recipe) AS number_meal
 FROM recipe
@@ -76,15 +76,24 @@ INNER JOIN category
 ON recipe.id_category = category.id_category
 GROUP BY category.id_category;
 
-/*Afficher les recettes qui contiennent l'ingrédient "poulet" */
+/*13-Afficher les recettes qui contiennent l'ingrédient "poulet" */
 SELECT recipe.recipe_name
 FROM recipe
 INNER JOIN recipe_ingredient ON recipe.id_recipe = recipe_ingredient.id_recipe
 INNER JOIN ingredient ON recipe_ingredient.id_ingredient = ingredient.id_ingredient
 WHERE ingredient.ingredient_name LIKE '%poulet%';
 
-/* Mettez à jour toutes les recettes en diminuant leur temps de préparation de 5 minutes */
+/*14-Mettez à jour toutes les recettes en diminuant leur temps de préparation de 5 minutes */
 UPDATE recipe
 SET preparation_time = (preparation_time - 5)
 WHERE preparation_time > 5;
+
+/*15-Afficher les recettes qui ne nécessite pas d'ingrédients coûtant plus de 2€ l'unité.*/
+SELECT DISTINCT recipe.recipe_name
+FROM recipe
+INNER JOIN recipe_ingredient
+ON recipe.id_recipe = recipe_ingredient.id_recipe
+INNER JOIN ingredient
+ON recipe_ingredient.id_ingredient = ingredient.id_ingredient
+WHERE ingredient.price < 2;
 
