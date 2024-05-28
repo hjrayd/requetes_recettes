@@ -1,6 +1,18 @@
 <?php
-
 session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Recette</title>
+</head>
+<body>
+
+<?php
 
 try
 {
@@ -11,42 +23,56 @@ catch (Exception $e)
     die('Erreur : ' . $e->getMessage());
 }
 
-$sqlQuery = 'SELECT DISTINCT recipe_name, ingredient_name, recipe_ingredient.quantity, ingredient.unity, recipe.preparation_time, recipe.instructions, recipe.image
+
+
+$sqlQuery = 'SELECT *
+FROM recipe
+WHERE recipe.id_recipe = :id';
+
+$id = $_GET['id'];
+$recetteStatement = $mysqlClient->  prepare($sqlQuery);
+$recetteStatement -> execute(["id" => $id]);
+$recettes = $recetteStatement->fetch();
+
+echo "<h2 class='text-center' >".$recettes['recipe_name']." </h2> <br>";
+
+
+$sqlQuery2 = 'SELECT DISTINCT recipe_name, ingredient_name, recipe_ingredient.quantity, ingredient.unity, recipe.preparation_time, recipe.instructions, recipe.image
 FROM ingredient
 INNER JOIN recipe_ingredient
 ON ingredient.id_ingredient = recipe_ingredient.id_ingredient
 INNER JOIN recipe
 ON recipe_ingredient.id_recipe = recipe.id_recipe
-WHERE recipe.id_recipe = :id_recipe';
+WHERE recipe.id_recipe = :id';
 
-
-$get_id_recipe = $_GET['id'];
-$recipeStatement = $mysqlClient->prepare($sqlQuery);
-$recipeStatement -> execute(["id_recipe" => $get_id_recipe]);
+$recipeStatement = $mysqlClient->prepare($sqlQuery2);
+$recipeStatement -> execute(["id" => $id]);
 $recipes = $recipeStatement->fetchAll();
 
-echo "<table>
+echo "<table class='table'>
         <tr>
-            <th> Nom de la recette </th>
             <th>Ingredient</th>
-            <th>Quantité</th>
-            <th>Temps de préparation</th>
-            <th>Instructions</th>
-            <th>Image</th>
-        </tr>";
+            <th>Quantité</th>";
 
-        foreach ($recipes as $recipe) {
+    
+
+ foreach ($recipes as $recipe) {
             echo "<tr>
-            <td>".$recipe['recipe_name']."</td>
           <td>".$recipe['ingredient_name']."</td>
-          <td>".$recipe['quantity'].$recipe['unity']."</td>";
+          <td>".$recipe['quantity'].$recipe['unity']."</td> <br>"
+          ;
         }
 
-    echo 
-        "<td>".$recipe['preparation_time']."</td>
-          <td>".$recipe['instructions']."</td>
-          <img src='{$recipe['image']}' alt='Image de la recette'/>";
+     echo "<br> <img class='rounded mx-auto d-block' src='{$recipe['image']}' alt='Image de la recette'/> <br>";
 
-        echo "</table>"
+        echo "</table>";
+       echo  "<br> <h4 class='text-center'>".$recipe['preparation_time']." minutes </h3>  <br>";
+        echo "<br> <p class='text-center'>".$recipe['instructions']." </p> <br>";
+        
+
+
 
         ?>
+
+        </body>
+</html>
