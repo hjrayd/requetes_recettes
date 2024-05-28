@@ -21,9 +21,9 @@ WHERE recipe.id_recipe = :id_recipe';
 
 
 $get_id_recipe = $_GET['id'];
-$infoStatement = $mysqlClient->prepare($sqlQuery);
-$infoStatement -> execute(["id_recipe" => $get_id_recipe]);
-$infos = $infoStatement->fetchAll();
+$recipeStatement = $mysqlClient->prepare($sqlQuery);
+$recipeStatement -> execute(["id_recipe" => $get_id_recipe]);
+$recipes = $recipeStatement->fetchAll();
 
 echo "<table>
         <tr>
@@ -34,13 +34,13 @@ echo "<table>
             <th>Image</th>
         </tr>";
 
-        foreach ($infos as $info) {
+        foreach ($recipes as $recipe) {
             echo "<tr>
-          <td>".$info['ingredient_name']."</td>
-          <td>".$info['quantity'].$info['unity']."</td>
-          <td>".$info['preparation_time']."</td>
-          <td>".$info['instructions']."</td>
-          <td>".$info['image']."</td>";
+          <td>".$recipe['ingredient_name']."</td>
+          <td>".$recipe['quantity'].$recipe['unity']."</td>
+          <td>".$recipe['preparation_time']."</td>
+          <td>".$recipe['instructions']."</td>
+          <td>".$recipe['image']."</td>";
         }
 
         echo "</table>"
