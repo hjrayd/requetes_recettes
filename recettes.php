@@ -10,7 +10,7 @@ catch (Exception $e)
     die('Erreur : ' . $e->getMessage());
 }
 
-$sqlQuery = 'SELECT recipe_name, preparation_time
+$sqlQuery = 'SELECT recipe_name, preparation_time, id_recipe
 FROM recipe
 ORDER BY preparation_time DESC';
 
