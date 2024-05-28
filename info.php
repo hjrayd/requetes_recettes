@@ -1,6 +1,6 @@
 <?php
 
-session_start()
+session_start();
 
 try
 {
@@ -11,7 +11,7 @@ catch (Exception $e)
     die('Erreur : ' . $e->getMessage());
 }
 
-$sqlQuery = 'SELECT ingredient_name,recipe_ingredient.quantity, recipe.preparation_time, recipe.instructions
+$sqlQuery = 'SELECT DISTINCT ingredient_name, recipe_ingredient.quantity, ingredient.unity, recipe.preparation_time, recipe.instructions, recipe.image
 FROM ingredient
 INNER JOIN recipe_ingredient
 ON ingredient.id_ingredient = recipe_ingredient.id_ingredient
@@ -27,11 +27,22 @@ $recipes = $recipeStatement->fetchAll();
 
 echo "<table>
         <tr>
-        <th>Recette</th>
-            <th>Temps de preparation </th>
+            <th>Ingredient</th>
+            <th>Quantité</th>
+            <th>Temps de préparation</th>
+            <th>Instructions</th>
+            <th>Image</th>
         </tr>";
 
-        foreach ($personnages as $personnage) {
+        foreach ($recipes as $recipe) {
             echo "<tr>
-            <td>".$personnage."</td>";
+          <td>".$recipe['ingredient_name']."</td>
+          <td>".$recipe['quantity'].$recipe['unity']."</td>
+          <td>".$recipe['preparation_time']."</td>
+          <td>".$recipe['instructions']."</td>
+          <td>".$recipe['image']."</td>";
         }
+
+        echo "</table>"
+
+        ?>
