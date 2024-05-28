@@ -16,13 +16,13 @@ session_start();
             <p>
                 <label class="form-label" >
                     Nom de l'ingrédient : 
-                    <input class="form-control" type="text" name="name">
+                    <input class="form-control" type="text" name="nom">
                 </label>
             </p>
             <p>
                 <label class="form-label">
                     Unité: 
-                    <input class="form-control" type="text" step="any" name="unity">
+                    <input class="form-control" type="text" name="unity">
                 </label>
             </p>
             <p>
@@ -31,17 +31,14 @@ session_start();
                     <input class="form-control" type="number" name="price" value="1">
                 </label>
             </p>
-            <input type="submit" name="submit" value="Ajouter le produit">
+            <input type="submit" name="submit" value="Ajouter l'ingrédient">
             <br>
         </form>
-    <?php
 
- if (isset($_SESSION["message"]))
- {
-     echo $_SESSION["message"]; 
-     unset($_SESSION["message"]); 
- }
- 
+<?php
+
+
+
     try
 {
     $mysqlClient = new PDO('mysql:host=localhost;dbname=recettes_hajar;charset=utf8', 'root', '');
@@ -69,8 +66,8 @@ echo "<table class='table'>
             <td><a class='link-offset-2 link-underline link-underline-opacity-0' href='info.php?id=".$recipe['id_recipe']."'>".$recipe['recipe_name']."</a></td>";
         }
     
-        echo "</table>"
-       
+        echo "</table>";
+
         ?>
 </body>
 </html>
