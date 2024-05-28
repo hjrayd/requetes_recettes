@@ -16,7 +16,7 @@ FROM ingredient
 INNER JOIN recipe_ingredient
 ON ingredient.id_ingredient = recipe_ingredient.id_ingredient
 INNER JOIN recipe
-ON recipe_ingredient.id_recipe = recipe.id_recipe;
+ON recipe_ingredient.id_recipe = recipe.id_recipe
 WHERE recipe.id_recipe = :id_recipe';
 
 
