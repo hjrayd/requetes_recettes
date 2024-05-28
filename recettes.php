@@ -11,9 +11,37 @@ session_start();
     <title>Recette</title>
 </head>
 <body>
-    
+
+<form action="traitement.php?action=add" method="post">
+            <p>
+                <label class="form-label" >
+                    Nom de l'ingrédient : 
+                    <input class="form-control" type="text" name="name">
+                </label>
+            </p>
+            <p>
+                <label class="form-label">
+                    Unité: 
+                    <input class="form-control" type="text" step="any" name="unity">
+                </label>
+            </p>
+            <p>
+                <label class="form-label">
+                    Prix: 
+                    <input class="form-control" type="number" name="price" value="1">
+                </label>
+            </p>
+            <input type="submit" name="submit" value="Ajouter le produit">
+            <br>
+        </form>
     <?php
 
+ if (isset($_SESSION["message"]))
+ {
+     echo $_SESSION["message"]; 
+     unset($_SESSION["message"]); 
+ }
+ 
     try
 {
     $mysqlClient = new PDO('mysql:host=localhost;dbname=recettes_hajar;charset=utf8', 'root', '');
@@ -33,7 +61,7 @@ $recipes = $recipeStatement->fetchAll();
 
 echo "<table class='table'>
         <tr>
-            <th>Nom de la recette</th>
+            <br> <th>Nom de la recette</th>
         </tr>";
 
         foreach ($recipes as $recipe) {
@@ -42,7 +70,7 @@ echo "<table class='table'>
         }
     
         echo "</table>"
-
+       
         ?>
 </body>
 </html>
