@@ -42,23 +42,19 @@ catch (Exception $e)
     
                    $nomRecette = filter_input(INPUT_POST, "nomRecette", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     $temps = filter_input(INPUT_POST, "temps", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                    $instruction = filter_input(INPUT_POST, "instruction", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                    $image = filter_input(INPUT_POST, "image", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                  
+                    $instructions = filter_input(INPUT_POST, "instruction", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    
-                        if($nomRecette && $temps && $instruction && $image) {
+                        if($nomRecette && $temps && $instructions && $category) {
     
                             $recette = [
                             "nomRecette" => $nomRecette,
                             "temps" => $temps,
-                            "instruction" => $instruction,
-                            "image" => $image
-                          
+                            "instructions" => $instructions,
+                            "category" => $category
                             ];
                    
-                            $sql2 = "INSERT INTO recipe (recipe_name, preparation_time, instructions, image)
-                            VALUES (:nomRecette, :temps, :instruction, :image)";
+                            $sql2 = "INSERT INTO recipe (recipe_name, preparation_time, instructions, category)
+                            VALUES (:nomRecette, :temps, :instructions, :category)";
                              $recettesStatement = $mysqlClient->prepare($sql2);
                              $recettesStatement->execute($recette);   
                         

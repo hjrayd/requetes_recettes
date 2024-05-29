@@ -51,17 +51,20 @@ session_start();
             </p>
             <p>
                 <label class="form-label">
-                    Instructions: 
-                    <input class="form-control" type="text" name="instruction">
-                </label>
+                    Instructions
+                    <textarea class="form-control" name="instructions" rows="5" cols="33">
+                </textarea>
+            </label>
             </p>
             <p>
                 <label class="form-label">
-                    Lien image: 
-                    <input class="form-control" type="text" name="image">
+                    <select name ="category">
+                        <option value="1">Entrée</option>
+                        <option value="2">Plat</option>
+                        <option value="3">Dessert</option>
+                    </select>
                 </label>
             </p>
-         
             <input type="submit" name="submit" value="Ajouter la recette">
             <br>
         </form>
