@@ -12,8 +12,24 @@ session_start();
 </head>
 <body>
 
+<?php
+try
+{
+    $mysqlClient = new PDO('mysql:host=localhost;dbname=recettes_hajar;charset=utf8', 'root', '');
+}
+catch (Exception $e)
+{
+    die('Erreur : ' . $e->getMessage());
+}
+ if (isset($_SESSION["message"]))
+ {
+     echo $_SESSION["message"]; 
+     unset($_SESSION["message"]); 
+ }
+?>
+
     <!--Formulaire ingrédient-->
-    <form action="traitement.php?action=add" method="post">
+    <form action="traitementt.php?action=add" method="post">
             <p>
                 <label class="form-label" >
                     Nom de l'ingrédient : 
@@ -71,22 +87,26 @@ session_start();
         </form>
         <br>
 
+         <!--Formulaire Ingredient/recette-->
+         <form action="traitementtt.php?action=addIngredient" method="post">
+            <p>
+                <label class="form-label" >
+                <select name="ingredient">
+                    <?php 
+                        $resultat = $connexion->query("SELECT id_ingredient FROM recipe_ingredient");
+                        while($row = $resultat->fetch_assoc()) {
+                        echo "<option value='" . $row['id_ingredient'] . "'>" . $row['recipe_ingredient'] . "</option>";
+                        }
+                    ?>  
+                </select>
+                </label>
+            </p>
+        </form>
+
+
 <?php
 
- if (isset($_SESSION["message"]))
- {
-     echo $_SESSION["message"]; 
-     unset($_SESSION["message"]); 
- }
 
-    try
-{
-    $mysqlClient = new PDO('mysql:host=localhost;dbname=recettes_hajar;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-    die('Erreur : ' . $e->getMessage());
-}
 
 $sqlQuery = 'SELECT recipe_name, preparation_time, id_recipe
 FROM recipe

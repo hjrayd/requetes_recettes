@@ -70,8 +70,6 @@ echo "<table class='table'>
         echo "<br> <p class='text-center'>".$recipe['instructions']." </p> <br>";
         
 
-
-
         ?>
 
         </body>
