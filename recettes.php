@@ -12,7 +12,8 @@ session_start();
 </head>
 <body>
 
-<form action="traitement.php?action=add" method="post">
+    <!--Formulaire ingrédient-->
+    <form action="traitement.php?action=add" method="post">
             <p>
                 <label class="form-label" >
                     Nom de l'ingrédient : 
@@ -35,7 +36,7 @@ session_start();
             <br>
         </form> <br>
 
-
+        <!--Formulaire recette-->
         <form action="traitement.php?action=addRecette" method="post">
             <p>
                 <label class="form-label" >
@@ -72,7 +73,11 @@ session_start();
 
 <?php
 
-
+ if (isset($_SESSION["message"]))
+ {
+     echo $_SESSION["message"]; 
+     unset($_SESSION["message"]); 
+ }
 
     try
 {
