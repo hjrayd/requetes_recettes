@@ -33,7 +33,39 @@ session_start();
             </p>
             <input type="submit" name="submit" value="Ajouter l'ingrédient">
             <br>
+        </form> <br>
+
+
+        <form action="traitement.php?action=addRecette" method="post">
+            <p>
+                <label class="form-label" >
+                    Nom de la recette: 
+                    <input class="form-control" type="text" name="nomRecette">
+                </label>
+            </p>
+            <p>
+                <label class="form-label">
+                    Temps de préparation: 
+                    <input class="form-control" type="number" name="temps">
+                </label>
+            </p>
+            <p>
+                <label class="form-label">
+                    Instructions: 
+                    <input class="form-control" type="text" name="instruction">
+                </label>
+            </p>
+            <p>
+                <label class="form-label">
+                    Lien image: 
+                    <input class="form-control" type="text" name="image">
+                </label>
+            </p>
+         
+            <input type="submit" name="submit" value="Ajouter la recette">
+            <br>
         </form>
+        <br>
 
 <?php
 
