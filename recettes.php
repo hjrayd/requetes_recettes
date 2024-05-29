@@ -28,6 +28,7 @@ catch (Exception $e)
  }
 ?>
 
+
     <!--Formulaire ingrédient-->
     <form action="traitementt.php?action=add" method="post">
             <p>
@@ -76,9 +77,13 @@ catch (Exception $e)
             <p>
                 <label class="form-label">
                     <select name ="category">
-                        <option value="1">Entrée</option>
-                        <option value="2">Plat</option>
-                        <option value="3">Dessert</option>
+                        Catégorie
+                       <?php
+                       $stmt = $pdo->query('SELECT id_category, name FROM category');
+                       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . htmlspecialchars($row['id_categorie']). '">' . htmlspecialchars($row['id_category']) . '</option>';
+                       }
+                       ?>
                     </select>
                 </label>
             </p>
@@ -91,23 +96,39 @@ catch (Exception $e)
          <form action="traitementtt.php?action=addIngredient" method="post">
             <p>
                 <label class="form-label" >
-                <select name="ingredient">
-                    <?php 
-                        $resultat = $connexion->query("SELECT id_ingredient FROM recipe_ingredient");
-                        while($row = $resultat->fetch_assoc()) {
-                        echo "<option value='" . $row['id_ingredient'] . "'>" . $row['recipe_ingredient'] . "</option>";
-                        }
-                    ?>  
-                </select>
+                <select name ="recette">
+                    Recette
+                    <?php
+                       $stmt = $pdo->query('SELECT id_recipe, recipe_name FROM recipe_ingredient');
+                       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . htmlspecialchars($row['id_recipe']). '">' . htmlspecialchars($row['id_recipe']) . '</option>';
+                       }
+                       ?>
+                    </select>
+                </label>
+            </p>
+            <p>
+                <label class="form-label" >
+                <select name ="ingredient">
+                    Ingredient
+                    <?php
+                       $stmt = $pdo->query('SELECT id_ingredient, ingredient_name FROM recipe_ingredient');
+                       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<option value="' . htmlspecialchars($row['id_ingredient']). '">' . htmlspecialchars($row['id_ingredient']) . '</option>';
+                       }
+                       ?>
+                    </select>
+                </label>
+            </p>
+            <p>
+                <label class="form-label">
+                    Quantité: 
+                    <input class="form-control" type="number" name="qtt">
                 </label>
             </p>
         </form>
 
-
 <?php
-
-
-
 $sqlQuery = 'SELECT recipe_name, preparation_time, id_recipe
 FROM recipe
 ORDER BY preparation_time DESC';
