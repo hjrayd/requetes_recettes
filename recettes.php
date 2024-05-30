@@ -93,13 +93,15 @@ catch (Exception $e)
         <br>
 
          <!--Formulaire Ingredient/recette-->
+         <!--Ne fonctionne pas à partir d'ici
          <form action="traitementtt.php?action=addIngredient" method="post">
             <p>
                 <label class="form-label" >
                 <select name ="recette">
                     Recette
-                    <?php
-                       $stmt = $pdo->query('SELECT id_recipe, recipe_name FROM recipe_ingredient');
+                   
+                   METTRE <PHP ICI
+                       /*  $stmt = $pdo->query('SELECT id_recipe FROM recipe_ingredient');
                        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo '<option value="' . htmlspecialchars($row['id_recipe']). '">' . htmlspecialchars($row['id_recipe']) . '</option>';
                        }
@@ -111,8 +113,9 @@ catch (Exception $e)
                 <label class="form-label" >
                 <select name ="ingredient">
                     Ingredient
-                    <?php
-                       $stmt = $pdo->query('SELECT id_ingredient, ingredient_name FROM recipe_ingredient');
+                    METTRE <PHP ICI
+                    /*
+                       $stmt = $pdo->query('SELECT id_ingredient FROM recipe_ingredient');
                        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo '<option value="' . htmlspecialchars($row['id_ingredient']). '">' . htmlspecialchars($row['id_ingredient']) . '</option>';
                        }
@@ -126,8 +129,7 @@ catch (Exception $e)
                     <input class="form-control" type="number" name="qtt">
                 </label>
             </p>
-        </form>
-
+        </form>-->
 <?php
 $sqlQuery = 'SELECT recipe_name, preparation_time, id_recipe
 FROM recipe
