@@ -12,22 +12,6 @@ session_start();
 </head>
 <body>
 
-<?php
-try
-{
-    $mysqlClient = new PDO('mysql:host=localhost;dbname=recettes_hajar;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-    die('Erreur : ' . $e->getMessage());
-}
- if (isset($_SESSION["message"]))
- {
-     echo $_SESSION["message"]; 
-     unset($_SESSION["message"]); 
- }
-?>
-
 
     <!--Formulaire ingrédient-->
     <form action="traitementt.php?action=add" method="post">
@@ -78,12 +62,16 @@ catch (Exception $e)
                 <label class="form-label">
                     <select name ="category">
                         Catégorie
-                       <?php
+                        <option value ="1">Entrée</option>
+                        <option value ="2">Plat</option>
+                        <option value ="3">Dessert</option>
+                        <!--php ne fonctionne pas ici non plus
                        $stmt = $pdo->query('SELECT id_category, name FROM category');
                        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo '<option value="' . htmlspecialchars($row['id_categorie']). '">' . htmlspecialchars($row['id_category']) . '</option>';
                        }
                        ?>
+                    -->
                     </select>
                 </label>
             </p>
@@ -91,9 +79,23 @@ catch (Exception $e)
             <br>
         </form>
         <br>
-
+        
+        <form action="traitementtt.php?action=addIngredient" method="post">
+        <label class="form-label">
+        <select name="ingrédients">
+    <?php 
+    $resultat = $connexion->query("SELECT id_ingredient, ingredient_name FROM recipe_ingredient");
+    while($row = $resultat->fetch_assoc()) {
+        echo "<option value='" . $row['id_ingredient'] . "'>" . $row['ingredient_name'] . "</option>";
+    }
+    ?>
+</select>
+</label>
+</form>
          <!--Formulaire Ingredient/recette-->
          <!--Ne fonctionne pas à partir d'ici
+
+         
          <form action="traitementtt.php?action=addIngredient" method="post">
             <p>
                 <label class="form-label" >
@@ -130,7 +132,21 @@ catch (Exception $e)
                 </label>
             </p>
         </form>-->
+
 <?php
+try
+{
+    $mysqlClient = new PDO('mysql:host=localhost;dbname=recettes_hajar;charset=utf8', 'root', '');
+}
+catch (Exception $e)
+{
+    die('Erreur : ' . $e->getMessage());
+}
+ if (isset($_SESSION["message"]))
+ {
+     echo $_SESSION["message"]; 
+     unset($_SESSION["message"]); 
+ }
 $sqlQuery = 'SELECT recipe_name, preparation_time, id_recipe
 FROM recipe
 ORDER BY preparation_time DESC';
