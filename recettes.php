@@ -80,22 +80,22 @@ session_start();
         </form>
         <br>
         
-        <form action="traitementtt.php?action=addIngredient" method="post">
+       
+         <!--Formulaire Ingredient/recette-->
+         <!--Ne fonctionne pas à partir d'ici
+
+          <form action="traitementtt.php?action=addIngredient" method="post">
         <label class="form-label">
         <select name="ingrédients">
-    <?php 
+    PHP
     $resultat = $connexion->query("SELECT id_ingredient, ingredient_name FROM recipe_ingredient");
     while($row = $resultat->fetch_assoc()) {
         echo "<option value='" . $row['id_ingredient'] . "'>" . $row['ingredient_name'] . "</option>";
     }
-    ?>
+  
 </select>
 </label>
 </form>
-         <!--Formulaire Ingredient/recette-->
-         <!--Ne fonctionne pas à partir d'ici
-
-         
          <form action="traitementtt.php?action=addIngredient" method="post">
             <p>
                 <label class="form-label" >
