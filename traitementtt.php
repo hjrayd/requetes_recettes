@@ -1,5 +1,4 @@
 
-
     <?php 
     session_start();
     try
@@ -17,18 +16,18 @@ catch (Exception $e)
     
                  $ingredient = filter_input(INPUT_POST, "ingredient", FILTER_VALIDATE_INT );
                  $recipe = filter_input(INPUT_POST, "recipe", FILTER_VALIDATE_INT );
-                 $qte = filter_input(INPUT_POST, "qte", FILTER_VALIDATE_INT );
+                 $quantity = filter_input(INPUT_POST, "quantity", FILTER_VALIDATE_INT );
 
-                     if($ingredient && $recipe && $qte) {
+                     if($ingredient && $recipe && $quantity) {
  
                          $recipeIngredient = [
                          "ingredient" => $ingredient,
                          "recipe" => $recipe,
-                         "qte" => $qte
+                         "quantity" => $quantity
                          ];
                 
                          $sqlll = "INSERT INTO recipe_ingredient (id_recipe, id_ingredient, quantity)
-                         VALUES (:recipe :ingredient :qte)";
+                         VALUES (:recipe, :ingredient, :quantity)";
                         $recipeStmt = $mysqlClient->prepare($sqlll);
                         $recipeStmt->execute($recipeIngredient);   
 

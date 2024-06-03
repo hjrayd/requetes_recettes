@@ -52,6 +52,12 @@ catch (Exception $e)
         </form> <br>
 
         <!--Formulaire recette-->
+        <?php
+        $sqlll = "SELECT category.name, id_category FROM category";
+        $categoryStmt = $mysqlClient->query($sqlll);
+        $categoryStmt = $categoryStmt->fetchAll();
+        ?>
+
         <form action="traitementt.php?action=addRecette" method="post">
             <p>
                 <label class="form-label" >
@@ -74,12 +80,13 @@ catch (Exception $e)
             </p>
             <p>
                 <label class="form-label">
-                    <select name ="category" class="form-select" aria-label="Default select example">
-                        Catégorie:
-                        <option value ="1">Entrée</option>
-                        <option value ="2">Plat</option>
-                        <option value ="3">Dessert</option>
-                    </select>
+                <?php
+                echo '<select name="category" class="form-select" aria-label="Default select example">';
+                foreach ($categories as $category) {
+                    echo "<option value='".$category['id_category']."'>".$category['name']."</option>";
+                }
+                echo '</select> ';
+                    ?>
                 </label>
             </p>
             <input type="submit" name="submit" value="Ajouter la recette">
@@ -87,18 +94,19 @@ catch (Exception $e)
         </form>
         <br>
         <?php
-        $sql = "SELECT ingredient_name FROM ingredient";
+        $sql = "SELECT ingredient_name, id_ingredient FROM ingredient";
         $ingredientsStmt = $mysqlClient->query($sql);
         $ingredients = $ingredientsStmt->fetchAll();
         
-        $sql = "SELECT recipe_name FROM recipe";
-        $recipesStmt = $mysqlClient->query($sql);
+        $sqll = "SELECT recipe_name, id_recipe FROM recipe";
+        $recipesStmt = $mysqlClient->query($sqll);
         $recipes = $recipesStmt->fetchAll();
 
         ?>
          <!--Formulaire Ingredient/recette-->
         <form action="traitementtt.php?action=addIngredient" method="post">
             <label class="form-label">
+                Ingrédients : 
                 <!--PARTIE PHP-->
                     <?php
                 echo '<select name="ingredient" class="form-select" aria-label="Default select example">';
@@ -110,6 +118,7 @@ catch (Exception $e)
             </label> 
             <br>
             <label class="form-label" >
+                Recettes :
                 <!--PARTIE PHP-->
                     <?php
                 echo '<select name="recipe" class="form-select" aria-label="Default select example">';
@@ -122,7 +131,7 @@ catch (Exception $e)
             <p>
                 <label class="form-label">
                     Quantité: 
-                    <input class="form-control" type="number" name="qte">
+                    <input class="form-control" type="number" name="quantity">
                 </label>
             </p>
             <input type="submit" name="submit" value="Ajouter les ingrédients à la recette">
