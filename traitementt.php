@@ -46,17 +46,21 @@ catch (Exception $e)
                      if($nomRecette && $temps && $instructions && $category ) {
  
                          $recette = [
-                         "nomRecette" => $nomRecette,
-                         "temps" => $temps,
-                         "instructions" => $instructions,
-                         "category" => $category,
-                         "image" => $file
+                            "nomRecette" => $nomRecette,
+                            "temps" => $temps,
+                            "instructions" => $instructions,
+                            "category" => $category,
+                            "file" => $file
                          ];
+
+                         //var_dump($recette);die;
                 
                          $sqll = "INSERT INTO recipe (recipe_name, preparation_time, instructions, id_category, image)
-                         VALUES (:nomRecette, :temps, :instructions, :category; :file)";
+                         VALUES (:nomRecette, :temps, :instructions, :category, :file)";
                           $recettesStatement = $mysqlClient->prepare($sqll);
                           $recettesStatement->execute($recette);   
+
+                          //var_dump($recette);die;
 
                           $_SESSION['message'] = "La recette a bien été ajoutée.";
              
