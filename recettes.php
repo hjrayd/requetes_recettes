@@ -55,7 +55,7 @@ catch (Exception $e)
         <?php
         $sqlll = "SELECT category.name, id_category FROM category";
         $categoryStmt = $mysqlClient->query($sqlll);
-        $categoryStmt = $categoryStmt->fetchAll();
+        $categories = $categoryStmt->fetchAll();
         ?>
 
         <form action="traitementt.php?action=addRecette" method="post">
