@@ -12,9 +12,23 @@ session_start();
 </head>
 <body>
 
-
+<?php
+try
+{
+    $mysqlClient = new PDO('mysql:host=localhost;dbname=recettes_hajar;charset=utf8', 'root', '');
+}
+catch (Exception $e)
+{
+    die('Erreur : ' . $e->getMessage());
+}
+ if (isset($_SESSION["message"]))
+ {
+     echo $_SESSION["message"]; 
+     unset($_SESSION["message"]); 
+ }
+ ?>
     <!--Formulaire ingrédient-->
-    <form action="traitementt.php?action=add" method="post">
+    <form action="traitement.php?action=add" method="post">
             <p>
                 <label class="form-label" >
                     Nom de l'ingrédient : 
@@ -38,7 +52,7 @@ session_start();
         </form> <br>
 
         <!--Formulaire recette-->
-        <form action="traitement.php?action=addRecette" method="post">
+        <form action="traitementt.php?action=addRecette" method="post">
             <p>
                 <label class="form-label" >
                     Nom de la recette: 
@@ -53,25 +67,18 @@ session_start();
             </p>
             <p>
                 <label class="form-label">
-                    Instructions
+                    Instructions:
                     <textarea class="form-control" name="instructions" rows="5" cols="33">
                 </textarea>
             </label>
             </p>
             <p>
                 <label class="form-label">
-                    <select name ="category">
-                        Catégorie
+                    <select name ="category" class="form-select" aria-label="Default select example">
+                        Catégorie:
                         <option value ="1">Entrée</option>
                         <option value ="2">Plat</option>
                         <option value ="3">Dessert</option>
-                        <!--php ne fonctionne pas ici non plus
-                       $stmt = $pdo->query('SELECT id_category, name FROM category');
-                       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        echo '<option value="' . htmlspecialchars($row['id_categorie']). '">' . htmlspecialchars($row['id_category']) . '</option>';
-                       }
-                       ?>
-                    -->
                     </select>
                 </label>
             </p>
@@ -79,33 +86,49 @@ session_start();
             <br>
         </form>
         <br>
+        <?php
+        $sql = "SELECT ingredient_name FROM ingredient";
+        $ingredientsStmt = $mysqlClient->query($sql);
+        $ingredients = $ingredientsStmt->fetchAll();
         
-       
+        $sql = "SELECT recipe_name FROM recipe";
+        $recipesStmt = $mysqlClient->query($sql);
+        $recipes = $recipesStmt->fetchAll();
+
+        ?>
          <!--Formulaire Ingredient/recette-->
-   
-
-          <form action="traitementtt.php?action=addIngredient" method="post">
-        <label class="form-label">
-        <select name="ingrédients">
-                    </select>
-                    </label>
-                    </form>
-  
-
+        <form action="traitementtt.php?action=addIngredient" method="post">
+            <label class="form-label">
+                <!--PARTIE PHP-->
+                    <?php
+                echo '<select name="ingredient" class="form-select" aria-label="Default select example">';
+                foreach ($ingredients as $ingredient) {
+                    echo "<option value='".$ingredient['id_ingredient']."'>".$ingredient['ingredient_name']."</option>";
+                }
+                echo '</select>';
+                    ?>
+            </label> 
+            <br>
+            <label class="form-label" >
+                <!--PARTIE PHP-->
+                    <?php
+                echo '<select name="recipe" class="form-select" aria-label="Default select example">';
+                foreach ($recipes as $recipe) {
+                    echo "<option value='".$recipe['id_recipe']."'>".$recipe['recipe_name']."</option>";
+                }
+                echo '</select> ';
+                    ?>
+            </label>
+            <p>
+                <label class="form-label">
+                    Quantité: 
+                    <input class="form-control" type="number" name="qte">
+                </label>
+            </p>
+            <input type="submit" name="submit" value="Ajouter les ingrédients à la recette">
+        </form>
+            
 <?php
-try
-{
-    $mysqlClient = new PDO('mysql:host=localhost;dbname=recettes_hajar;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-    die('Erreur : ' . $e->getMessage());
-}
- if (isset($_SESSION["message"]))
- {
-     echo $_SESSION["message"]; 
-     unset($_SESSION["message"]); 
- }
 $sqlQuery = 'SELECT recipe_name, preparation_time, id_recipe
 FROM recipe
 ORDER BY preparation_time DESC';
@@ -116,7 +139,7 @@ $recipes = $recipeStatement->fetchAll();
 
 echo "<table class='table'>
         <tr>
-            <br> <th>Nom de la recette</th>
+            <br> <th> Nom de la recette </th>
         </tr>";
 
         foreach ($recipes as $recipe) {

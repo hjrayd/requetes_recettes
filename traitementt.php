@@ -1,4 +1,5 @@
-<?php 
+
+    <?php 
     session_start();
     try
 {
@@ -11,45 +12,35 @@ catch (Exception $e)
 
     if(isset($_GET['action'])) {
         switch($_GET['action']) {
-
-            case "add": if (isset($_POST['submit'])){
-                
-                    $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS); 
-                    $unity = filter_input(INPUT_POST, "unity", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                    $price = filter_input(INPUT_POST, "price", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-
-                   
+            case "addRecette": if (isset($_POST['submit'])){
     
-                        if($nom && $unity && $price) {
-    
-                            $ingredient = [
-                            "nom" => $nom,
-                            "unity"=> $unity,
-                            "price" => $price,
-                            ];
+                $nomRecette = filter_input(INPUT_POST, "nomRecette", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                 $temps = filter_input(INPUT_POST, "temps", FILTER_VALIDATE_INT );
+                 $instructions = filter_input(INPUT_POST, "instructions", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                 $category = filter_input(INPUT_POST, "category", FILTER_VALIDATE_INT );
 
-                            $sql = "INSERT INTO ingredient (ingredient_name, unity, price)
-                            VALUES (:nom, :unity, :price)";
-                             $recetteStatement = $mysqlClient->prepare($sql);
-                             $recetteStatement->execute($ingredient);    
+                     if($nomRecette && $temps && $instructions && $category) {
+ 
+                         $recette = [
+                         "nomRecette" => $nomRecette,
+                         "temps" => $temps,
+                         "instructions" => $instructions,
+                         "category" => $category
+                         ];
+                
+                         $sqll = "INSERT INTO recipe (recipe_name, preparation_time, instructions, id_category)
+                         VALUES (:nomRecette, :temps, :instructions, :category)";
+                          $recettesStatement = $mysqlClient->prepare($sqll);
+                          $recettesStatement->execute($recette);   
 
-                             $_SESSION['message'] = "L'ingrédient a bien été ajouté.";
-                
-                            } else {
-                                $_SESSION['message'] ="L'ingrédient n'a pas pu être ajouté'.";
-                                }
-                        }
-                       
-                     header("Location:recettes.php");
-                    break;
-                    
-                
-               
-               
+                          $_SESSION['message'] = "La recette a bien été ajoutée.";
+             
+                         } else {
+                             $_SESSION['message'] ="La recette n'a pas pu être ajoutée.";
+                             }
+                         
+                     } header("Location:recettes.php");
+                 break;
                 }
-    
-                } 
-            
-               
-                    
-    ?>
+                    }
+                    ?>
