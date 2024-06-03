@@ -50,7 +50,7 @@ catch (Exception $e)
                          "temps" => $temps,
                          "instructions" => $instructions,
                          "category" => $category,
-                         "file" => $file
+                         "image" => $file
                          ];
                 
                          $sqll = "INSERT INTO recipe (recipe_name, preparation_time, instructions, id_category, image)
