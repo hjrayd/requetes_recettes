@@ -58,7 +58,7 @@ catch (Exception $e)
         $categories = $categoryStmt->fetchAll();
         ?>
 
-        <form action="traitementt.php?action=addRecette" method="post">
+        <form action="traitementt.php?action=addRecette" method="post" enctype= "multipart/form-data">
             <p>
                 <label class="form-label" >
                     Nom de la recette: 
@@ -88,6 +88,10 @@ catch (Exception $e)
                 echo '</select> ';
                     ?>
                 </label>
+            </p>
+            <p>
+                <label for="file">Image</label>
+                <input type="file" name="file">  
             </p>
             <input type="submit" name="submit" value="Ajouter la recette">
             <br>
